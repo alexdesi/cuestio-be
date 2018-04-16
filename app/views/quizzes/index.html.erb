@@ -1,2 +1,10 @@
-<%= javascript_pack_tag 'hello_react' %>
+<%= javascript_pack_tag 'app_react' %>
+
 <h1>Quizzes</h1>
+
+<%= content_tag :div,
+  id: :questions_data,
+  data: @questions_prop.to_json do %>
+<% end %>
+
+<div id="root"></div>
