@@ -1,32 +1,57 @@
 class QuizMarkdown
   def initialize(filename)
-    @file = File.open(filename)
+    @text = File.open(filename).read
     @quiz = Quiz.new
   end
 
   def quiz
-    @file.each_line do |line|
-      if h1(line)
-        @quiz.title = h1(line)[1].strip
-      elsif h2(line)
-        @quiz.description ||= h2(line)[1].strip
-      elsif ol(line)
+    @quiz.title = title
+    @quiz.description = description_paragraph
+
+    questions_paragraph.each_line do |line|
+      if ol(line)
         @quiz.add_question(id: ol(line)[1], body: ol(line)[2].strip)
       elsif li(line)
-        @quiz.add_response(li(line)[1].strip)
+        @quiz.add_option(li(line)[1].strip)
       end
     end
+
+    @quiz.responses = responses
     @quiz.to_json
   end
 
   private
 
-  def h1(line)
-    /^#([\w\s]+)/.match(line)
+  def description_paragraph
+    (/##description(.+?)##/mi)
+      .match(@text)[1]
+      .strip
   end
 
-  def h2(line)
-    /^##(\w+)/.match(line)
+  def title
+    /^#([\w\s]+)$/
+      .match(@text)[1]
+      .strip
+  end
+
+  def questions_paragraph
+    (/##Questions(.+?)##/mi)
+      .match(@text)[1]
+      .strip
+  end
+
+  def responses_paragraph
+    (/##responses(.+?)##/mi)
+      .match(@text)[1]
+      .strip
+  end
+
+  def responses
+    responses_paragraph.split(',')
+                  .each_with_object({}) do |response, hash|
+                    id_question, id_response = response.split(':')
+                    hash[id_question.to_i] = id_response.to_i
+                  end
   end
 
   def ol(line)
@@ -40,7 +65,7 @@ class QuizMarkdown
 end
 
 class Quiz
-  attr_accessor :title, :description, :questions
+  attr_accessor :title, :description, :questions, :responses
 
   def initialize()
     @questions = []
@@ -50,19 +75,20 @@ class Quiz
     @questions << {
       id: id,
       body: body,
-      responses: []
+      options: []
     }
   end
 
-  def add_response(response)
-    @questions.last[:responses] << response
+  def add_option(option)
+    @questions.last[:options] << option
   end
 
   def to_json
     output = {
                title: @title,
                description: @description,
-               questions: @questions
+               questions: @questions,
+               responses: @responses
              }
     output
   end

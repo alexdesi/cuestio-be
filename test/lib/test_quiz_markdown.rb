@@ -12,22 +12,29 @@ class TestQuizMarkdown < MiniTest::Unit::TestCase
   end
 
   def test_that_description_is_correct
-    assert_equal 'Description', @quiz_markdown.quiz[:description]
+    assert_equal 'This is the description', @quiz_markdown.quiz[:description]
+  end
+
+  def test_that_responses_are_correct
+    assert_equal ({
+                    1 => 1,
+                    2 => 3,
+                    3 => 1
+                  }), @quiz_markdown.quiz[:responses]
   end
 
   def test_that_ol_is_correct
     assert_equal [
       {
         :id=>"1", :body=>"First question", 
-        :responses=>["Option1", "Option2", "Option3"]
+        :options=>["Option1", "Option2", "Option3"]
       },{
         :id=>"2", :body=>"Second question",
-        :responses=>["Option1", "Option2", "Option3"]},
+        :options=>["Option1", "Option2", "Option3"]},
       {
         :id=>"3", :body=>"Third question",
-        :responses=>["Option1", "Option2", "Option3"]
+        :options=>["Option1", "Option2", "Option3"]
       }],
     @quiz_markdown.quiz[:questions]
   end
-
 end
