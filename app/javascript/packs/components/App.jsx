@@ -9,7 +9,8 @@ class App extends Component {
           <h1 className="App-title">Quiz</h1>
         </header>
         <p>Questions</p>
-        <Quiz questions={ this.props.questions } />
+        { console.log(this.props) }
+        <Quiz quiz={ this.props } />
       </div>
     )
   }

@@ -1,6 +1,6 @@
 module QuizMarkdown
   class Quiz
-    attr_accessor :title, :description, :questions, :responses
+    attr_accessor :title, :description, :questions, :correct_responses
 
     def initialize()
       @questions = []
@@ -10,12 +10,12 @@ module QuizMarkdown
       @questions << {
         id: id,
         body: body,
-        options: []
+        responses: []
       }
     end
 
-    def add_option(option)
-      @questions.last[:options] << option
+    def add_response(option)
+      @questions.last[:responses] << option
     end
 
     def empty?
@@ -27,7 +27,7 @@ module QuizMarkdown
                  title: @title,
                  description: @description,
                  questions: @questions,
-                 responses: @responses
+                 responses: @correct_responses
                }
       output
     end

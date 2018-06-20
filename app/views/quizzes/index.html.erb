@@ -1,10 +1,5 @@
-<%= javascript_pack_tag 'app_react' %>
-
 <h1>Quizzes</h1>
 
-<%= content_tag :div,
-  id: :questions_data,
-  data: @questions_prop.to_json do %>
+<% @quizzes.each do |quiz| %>
+  <p><%= link_to quiz.title, quiz %></p>
 <% end %>
-
-<div id="root"></div>

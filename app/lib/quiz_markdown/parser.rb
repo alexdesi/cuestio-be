@@ -14,13 +14,13 @@ module QuizMarkdown
 
       @quiz.title = title
       @quiz.description = description_paragraph
-      @quiz.responses = responses
+      @quiz.correct_responses = correct_responses
 
       questions_paragraph.each_line do |line|
         if ol(line)
           @quiz.add_question(id: ol(line)[1], body: ol(line)[2].strip)
         elsif li(line)
-          @quiz.add_option(li(line)[1].strip)
+          @quiz.add_response(li(line)[1].strip)
         end
       end
 
@@ -57,7 +57,7 @@ module QuizMarkdown
         .strip
     end
 
-    def responses
+    def correct_responses
       responses_paragraph.split(',')
                     .each_with_object({}) do |response, hash|
                       id_question, id_response = response.split(':')

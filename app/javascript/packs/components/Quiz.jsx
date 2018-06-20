@@ -41,9 +41,10 @@ class Quiz extends Component {
   render(){
     return(
       <div>
+        { console.log(this.state) }
         { !this.state.completed ?
-          <Question question={this.props.questions[this.state.currentQuestionId]}
-                    questionsNumber={this.props.questions.length}
+          <Question question={this.props.quiz.questions[this.state.currentQuestionId]}
+                    questionsNumber={this.props.quiz.questions.length}
                     handleNextQuestion={this.handleNextQuestion.bind(this)} /> :
           <div>
             <p>Test completed! Well done :)</p>
@@ -56,4 +57,3 @@ class Quiz extends Component {
 }
 
 export { Quiz }
-

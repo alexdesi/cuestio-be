@@ -20,20 +20,20 @@ class TestQuizMarkdown < MiniTest::Unit::TestCase
                     1 => 1,
                     2 => 3,
                     3 => 1
-                  }), @quiz_markdown.quiz.responses
+                  }), @quiz_markdown.quiz.correct_responses
   end
 
   def test_that_ol_is_correct
     assert_equal [
       {
         :id=>"1", :body=>"First question", 
-        :options=>["Option1", "Option2", "Option3"]
+        :responses=>["Option1", "Option2", "Option3"]
       },{
         :id=>"2", :body=>"Second question",
-        :options=>["Option1", "Option2", "Option3"]},
+        :responses=>["Option1", "Option2", "Option3"]},
       {
         :id=>"3", :body=>"Third question",
-        :options=>["Option1", "Option2", "Option3"]
+        :responses=>["Option1", "Option2", "Option3"]
       }],
     @quiz_markdown.quiz.questions
   end
