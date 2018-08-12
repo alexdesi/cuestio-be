@@ -6,22 +6,22 @@ class QuizzesController < ApplicationController
   def show
     @quiz_prop = {
       questions: [{
-          id: 1,
+          id: 10,
           body: 'Who invented the language Ruby?',
-          responses: [[0, 'Matzumoto'], [1, 'DHH'], [2,'Linus']],
+          responses: [[1, 'Matzumoto'], [2, 'DHH'], [3, 'Linus']],
         },
         {
-          id: 2,
+          id: 11,
           body: 'What is the superclass of Object?',
-          responses: [[0, 'nil'], [1, 'BasicObject'], [2,'Integer']],
+          responses: [[1, 'nil'], [2, 'BasicObject'], [3, 'Integer']],
         },
         {
-          id: 3,
+          id: 12,
           body: 'What\'s the result of [1,2,3].map{|n| n * 2} ?',
-          responses: [[0, '[]'], [1, '[1,4,9'], [2,'[2,4,6]']],
+          responses: [[1, '[]'], [2, '[1,4,9'], [3, '[2,4,6]']],
           last: true
         }],
-      correct_responses: { '1':0, '2':1, '3':2 }
+      correct_responses: { '1':1, '2':2, '3':3 }
     }
 
  # {:title=>"Quiz Title",

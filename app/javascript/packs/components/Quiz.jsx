@@ -12,27 +12,25 @@ class Quiz extends Component {
   }
 
   handleNextQuestion(currentResponse){
-
     let currentQuestionId = this.state.currentQuestionId
     let newResponses = this.state.responses.concat({
                            id: currentQuestionId,
                            response: currentResponse
                          })
-
-    if (currentQuestionId < this.props.questions.length) {
+    if (currentQuestionId < this.props.quiz.quiz.questions.length) {
       currentQuestionId++
 
       this.setState({
         currentQuestionId: currentQuestionId,
         responses: newResponses,
-        completed: (currentQuestionId == this.props.questions.length)
+        completed: (currentQuestionId == this.props.quiz.quiz.questions.length)
       })
     }
   }
 
   score(){
-    let correctResponses = this.props.questions.filter((q, i) => 
-          q.correctResponse == this.state.responses[i].response
+    let correctResponses = this.props.quiz.quiz.questions.filter((q, i) => 
+          this.props.quiz.quiz.correct_responses[i + 1] == this.state.responses[i].response
         )
     let score = correctResponses.length / this.state.responses.length
     return(score)
@@ -41,10 +39,9 @@ class Quiz extends Component {
   render(){
     return(
       <div>
-        { console.log(this.state) }
         { !this.state.completed ?
-          <Question question={this.props.quiz.questions[this.state.currentQuestionId]}
-                    questionsNumber={this.props.quiz.questions.length}
+          <Question question={this.props.quiz.quiz.questions[this.state.currentQuestionId]}
+                    questionsNumber={this.props.quiz.quiz.questions.length}
                     handleNextQuestion={this.handleNextQuestion.bind(this)} /> :
           <div>
             <p>Test completed! Well done :)</p>
