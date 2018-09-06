@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Responses } from './Responses'
+import { Options } from './Options'
 
 class Question extends Component {
   constructor(props){
@@ -7,7 +7,7 @@ class Question extends Component {
     this.state = { response: null }
   }
 
-  handleSelectOption(response) {
+  optionSelected(response) {
     this.setState({response: response })
   }
 
@@ -25,8 +25,12 @@ class Question extends Component {
       <div>
         <p>Question {this.props.question.id} of {this.props.questionsNumber}</p>
         <h3>{ this.props.question.body }</h3>
-        <Responses question={ this.props.question }
-                   handleSelectOption={ this.handleSelectOption.bind(this) }/>
+        <Options
+          options={ this.props.question.options }
+          selected = { this.state.response }
+          optionSelected={ this.optionSelected.bind(this) }>
+        </Options>
+
         <button onClick={ this.handleConfirm.bind(this) }>Confirm</button>
       </div>
     )

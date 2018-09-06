@@ -10,12 +10,12 @@ module QuizMarkdown
       @questions << {
         id: id,
         body: body,
-        responses: []
+        options: []
       }
     end
 
-    def add_response(option)
-      @questions.last[:responses] << option
+    def add_option(option)
+      @questions.last[:options] << option
     end
 
     def empty?

@@ -4,6 +4,9 @@ import { Question } from './Question'
 class Quiz extends Component {
   constructor(props){
     super(props)
+    console.log('[Quiz] props')
+    console.log(props)
+    
     this.state = {
                    currentQuestionId: 0,
                    responses: [],
@@ -17,20 +20,20 @@ class Quiz extends Component {
                            id: currentQuestionId,
                            response: currentResponse
                          })
-    if (currentQuestionId < this.props.quiz.quiz.questions.length) {
+    if (currentQuestionId < this.props.quiz.questions.length) {
       currentQuestionId++
 
       this.setState({
         currentQuestionId: currentQuestionId,
         responses: newResponses,
-        completed: (currentQuestionId == this.props.quiz.quiz.questions.length)
+        completed: (currentQuestionId == this.props.quiz.questions.length)
       })
     }
   }
 
   score(){
-    let correctResponses = this.props.quiz.quiz.questions.filter((q, i) => 
-          this.props.quiz.quiz.correct_responses[i + 1] == this.state.responses[i].response
+    let correctResponses = this.props.quiz.questions.filter((q, i) => 
+          this.props.quiz.correct_responses[i + 1] == this.state.responses[i].response
         )
     let score = correctResponses.length / this.state.responses.length
     return(score)
@@ -40,8 +43,8 @@ class Quiz extends Component {
     return(
       <div>
         { !this.state.completed ?
-          <Question question={this.props.quiz.quiz.questions[this.state.currentQuestionId]}
-                    questionsNumber={this.props.quiz.quiz.questions.length}
+          <Question question={this.props.quiz.questions[this.state.currentQuestionId]}
+                    questionsNumber={this.props.quiz.questions.length}
                     handleNextQuestion={this.handleNextQuestion.bind(this)} /> :
           <div>
             <p>Test completed! Well done :)</p>

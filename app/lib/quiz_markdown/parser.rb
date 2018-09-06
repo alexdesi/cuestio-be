@@ -20,7 +20,7 @@ module QuizMarkdown
         if ol(line)
           @quiz.add_question(id: ol(line)[1], body: ol(line)[2].strip)
         elsif li(line)
-          @quiz.add_response(li(line)[1].strip)
+          @quiz.add_option(li(line)[1].strip)
         end
       end
 
