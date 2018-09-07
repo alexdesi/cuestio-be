@@ -37,19 +37,19 @@ class QuizzesController < ApplicationController
         {
           id: 11,
           body: 'What is the superclass of Object?',
-          options: [{id: 100, body: 'nil'},
-                    {id: 101, body: 'BasicObject'},
-                    {id: 102, body: 'Integer'}],
+          options: [{id: 103, body: 'nil'},
+                    {id: 104, body: 'BasicObject'},
+                    {id: 105, body: 'Integer'}],
         },
         {
           id: 12,
           body: 'What\'s the result of [1,2,3].map{|n| n * 2} ?',
-          options: [{id: 100, body: '[]]'},
-                    {id: 101, body: '[1,4,9]'},
-                    {id: 102, body: '[2,4,6]'}],
+          options: [{id: 106, body: '[]]'},
+                    {id: 107, body: '[1,4,9]'},
+                    {id: 108, body: '[2,4,6]'}],
           last: true
         }],
-      correct_responses: { '1':1, '2':2, '3':3 }
+      correct_responses: { '10':100, '11':104, '12':108 }
     }
   end
 end

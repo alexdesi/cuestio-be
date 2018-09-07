@@ -4,7 +4,12 @@ import { Options } from './Options'
 class Question extends Component {
   constructor(props){
     super(props)
-    this.state = { response: null }
+    console.log('Question constructor')
+    console.log(props)
+    this.state = {
+      id: props.id,
+      response: null
+    }
   }
 
   optionSelected(response) {
@@ -15,7 +20,7 @@ class Question extends Component {
     if (this.state.response === null) {
       alert('Hey! No response is not a response :)')
     }else{
-      this.props.handleNextQuestion(this.state.response)
+      this.props.handleNextQuestion(this.state)
       this.setState({response: null })
     }
   }
