@@ -6,7 +6,15 @@ module QuizMarkdown
       @questions = []
     end
 
-    def add_question(id:, body:)
+    def loadFrom(quiz_id)
+      Quiz.find(quiz_id)
+      questions.each do |q|
+        add_question(q.id, q.body)
+
+      end
+    end
+
+    def add_question(body:, id: nil)
       @questions << {
         id: id,
         body: body,
@@ -14,7 +22,8 @@ module QuizMarkdown
       }
     end
 
-    def add_option(option)
+    def add_option(body:, id: nil)
+      option = [body: body, id: id]
       @questions.last[:options] << option
     end
 

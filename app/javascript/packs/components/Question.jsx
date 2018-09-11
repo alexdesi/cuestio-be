@@ -6,10 +6,7 @@ class Question extends Component {
     super(props)
     console.log('Question constructor')
     console.log(props)
-    this.state = {
-      id: props.id,
-      response: null
-    }
+    this.state = { response: null }
   }
 
   optionSelected(response) {
@@ -20,7 +17,7 @@ class Question extends Component {
     if (this.state.response === null) {
       alert('Hey! No response is not a response :)')
     }else{
-      this.props.handleNextQuestion(this.state)
+      this.props.handleNextQuestion({id: this.props.question.id, response: this.state.response})
       this.setState({response: null })
     }
   }

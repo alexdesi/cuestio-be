@@ -7,7 +7,6 @@ namespace :quiz_markdown do
     puts args
 
     quiz_markdown = QuizMarkdown::Parser.new(args[:qmd_file]).quiz
-    binding.pry
 
     # Create Quiz, Questions and Options into the DB
     quiz = Quiz.create(title: quiz_markdown.title, description: quiz_markdown.description)

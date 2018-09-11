@@ -8,48 +8,39 @@ class Quiz extends Component {
     console.log(props)
 
     let firstQuestionId = this.questionIds()[0]
-    
+
     this.state = {
-                   currentQuestionId: firstQuestionId,
-                   responses: [],
-                   completed: false
-                 }
+      currentQuestionId: firstQuestionId,
+      completed: false
+    }
+
+    this.responses = []
   }
 
   questionIds() {
     return this.props.quiz.questions.map(q => q.id)
   }
 
+  currentIndex(){
+    return this.questionIds().indexOf(this.state.currentQuestionId)
+  }
+
+  isLastQuestion(){
+    return (this.currentIndex() + 1 === this.props.quiz.questions.length)
+  }
+
   handleNextQuestion(currentResponse){
-    console.log('currentResponse: ')
-    console.log(currentResponse)
+    this.responses.push({ id: currentResponse.id,
+                          response: currentResponse.response
+                        })
 
-    let currentQuestionId = this.state.currentQuestionId
-
-    let newResponses = this.state.responses.concat({
-                           id: currentResponse.id,
-                           response: currentResponse.response
-                         })
-
-    // if (currentQuestionId != -1) {
-      console.log('questionIds(): ')
-      console.log(this.questionIds())
-
-      console.log('currentQuestionId')
-      console.log(currentQuestionId)
+      if (this.isLastQuestion()) {
+        this.setState({ completed: true })
+      }else{
+        let nextQuestionId = this.questionIds()[this.currentIndex() + 1]
+        this.setState({ currentQuestionId: nextQuestionId })
+      }
       
-      currentQuestionId = this.questionIds()[this.questionIds().indexOf(currentQuestionId) + 1]
-
-      console.log('currentQuestionId')
-      console.log(currentQuestionId)
-
-
-      this.setState({
-        currentQuestionId: currentQuestionId,
-        responses: newResponses,
-        completed: (currentQuestionId == this.props.quiz.questions.length)
-      })
-    // }
   }
 
   questionById(id){
@@ -57,30 +48,13 @@ class Quiz extends Component {
   }
 
   score(){
-    console.log('questions:')
-    console.log(this.props.quiz.questions)
-    
-    console.log('Correct_responses:')
-    console.log(this.props.quiz.correct_responses)
+    let correctResponses = this.responses.filter( (r) => r.response == this.props.quiz.correct_responses[r.id] )
 
-    console.log('this.state.responses:')
-    console.log(this.state.responses)
-
-
-    let correctResponses = this.props.quiz.questions.filter((q, i) => 
-          this.props.quiz.correct_responses[i + 1] == this.state.responses[i].response
-        )
-    let score = correctResponses.length / this.state.responses.length
+    let score = correctResponses.length / this.responses.length
     return(score)
   }
 
   render(){
-    console.log('questions:')
-    console.log(this.props.quiz.questions)
-
-    console.log('currentQuestionId')
-    console.log(this.state.currentQuestionId)
-
     return(
       <div>
         { !this.state.completed ?

@@ -18,9 +18,9 @@ module QuizMarkdown
 
       questions_paragraph.each_line do |line|
         if ol(line)
-          @quiz.add_question(id: ol(line)[1], body: ol(line)[2].strip)
+          @quiz.add_question(body: ol(line)[1].strip)
         elsif li(line)
-          @quiz.add_option(li(line)[1].strip)
+          @quiz.add_option(body: li(line)[1].strip)
         end
       end
 
@@ -66,7 +66,7 @@ module QuizMarkdown
     end
 
     def ol(line)
-      /^(\d)\.\s([\w\s\?]+)/.match(line)
+      /^\d\.\s([\w\s\?]+)/.match(line)
     end
 
     def li(line)
