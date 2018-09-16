@@ -4,6 +4,7 @@ class QuizzesController < ApplicationController
   end
 
   def show
+    @quiz = Quiz.find_by(id: params[:id])
     # @quiz_prop = {
     #   questions: [{
     #       id: 10,

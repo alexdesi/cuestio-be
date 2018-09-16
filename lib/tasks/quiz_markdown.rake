@@ -6,11 +6,11 @@ namespace :quiz_markdown do
   task :import, [:qmd_file] => :environment do |_task, args| #qmd = QuizMarkdown
     puts args
 
-    quiz_markdown = QuizMarkdown::Parser.new(args[:qmd_file]).quiz
+    quiz_json = QuizMarkdown::Parser.new(args[:qmd_file]).quiz_json
 
     # Create Quiz, Questions and Options into the DB
-    quiz = Quiz.create(title: quiz_markdown.title, description: quiz_markdown.description)
-    quiz_markdown.questions.each do |q|
+    quiz = Quiz.create(title: quiz_json.title, description: quiz_json.description)
+    quiz_json.questions.each do |q|
       question = Question.create(quiz_id: quiz.id, body: q[:body])
       pp q
       q[:options].each do |opt|
@@ -18,6 +18,9 @@ namespace :quiz_markdown do
       end
     end
 
-    p "Added quiz: '#{quiz.title}'"
+    p 'Quiz Added'
+    p "ID: #{quiz.id}"
+    p "Title: #{quiz.title}"
+    p '- - -'
   end
 end

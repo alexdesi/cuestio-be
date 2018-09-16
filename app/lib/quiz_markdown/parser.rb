@@ -1,4 +1,4 @@
-require './app/lib/quiz_markdown/quiz'
+require './app/lib/quiz_json'
 
 module QuizMarkdown
   class Parser
@@ -6,25 +6,25 @@ module QuizMarkdown
       raise('Ops! Filename is empty!') if filename.empty?
 
       @text = File.open(filename).read
-      @quiz = Quiz.new
+      @quiz_json = QuizJson.new
     end
 
-    def quiz
-      return @quiz.to_hash unless @quiz.empty?
+    def quiz_json
+      return @quiz_json.to_hash unless @quiz_json.empty?
 
-      @quiz.title = title
-      @quiz.description = description_paragraph
-      @quiz.correct_responses = correct_responses
+      @quiz_json.title = title
+      @quiz_json.description = description_paragraph
+      @quiz_json.correct_responses = correct_responses
 
       questions_paragraph.each_line do |line|
         if ol(line)
-          @quiz.add_question(body: ol(line)[1].strip)
+          @quiz_json.add_question(body: ol(line)[1].strip)
         elsif li(line)
-          @quiz.add_option(body: li(line)[1].strip)
+          @quiz_json.add_option(body: li(line)[1].strip)
         end
       end
 
-      @quiz
+      @quiz_json
     end
 
     private
