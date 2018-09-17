@@ -8,13 +8,12 @@ namespace :quiz_markdown do
 
     quiz_json = QuizMarkdown::Parser.new(args[:qmd_file]).quiz_json
 
-    # Create Quiz, Questions and Options into the DB
     quiz = Quiz.create(title: quiz_json.title, description: quiz_json.description)
     quiz_json.questions.each do |q|
       question = Question.create(quiz_id: quiz.id, body: q[:body])
       pp q
       q[:options].each do |opt|
-        Option.create(question_id: question.id, body: opt)
+        Option.create(question_id: question.id, body: opt[:body])
       end
     end
 

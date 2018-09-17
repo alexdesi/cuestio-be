@@ -17,6 +17,7 @@ class QuizJson
     end
 
     @correct_responses = load_correct_responses(quiz)
+    self
   end
 
   def add_question(body:, id: nil)
