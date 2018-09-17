@@ -6,11 +6,17 @@ class QuizJson
   end
 
   def load_from(quiz)
-    # Quiz.find(quiz_id)
     @title = quiz.title
+    @description = quiz.description
+
     quiz.questions.each do |q|
       add_question(body: q.body, id: q.id)
+      q.options.each do |opt|
+        add_option(body: opt.body, id: opt.id)
+      end
     end
+
+    @correct_responses = load_correct_responses(quiz)
   end
 
   def add_question(body:, id: nil)
@@ -29,12 +35,22 @@ class QuizJson
     title.nil?
   end
 
+  def load_correct_responses(quiz)
+    result = []
+    quiz.questions.each do |q|
+      q.options.each do |opt|
+        result << { opt.id => opt.is_correct }
+      end
+    end
+    result
+  end
+
   def to_hash
     output = {
                title: @title,
                description: @description,
                questions: @questions,
-               responses: @correct_responses
+               correct_responses: correct_responses
              }
     output
   end
