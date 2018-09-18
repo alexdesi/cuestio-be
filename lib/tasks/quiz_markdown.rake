@@ -13,7 +13,7 @@ namespace :quiz_markdown do
       question = Question.create(quiz_id: quiz.id, body: q[:body])
       pp q
       q[:options].each do |opt|
-        Option.create(question_id: question.id, body: opt[:body])
+        Option.create(question_id: question.id, body: opt[:body], is_correct: opt[:is_correct])
       end
     end
 

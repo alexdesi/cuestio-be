@@ -1,11 +1,13 @@
 class QuizJson
-  attr_accessor :title, :description, :questions, :correct_responses
+  attr_accessor :title, :description, :questions #, :correct_responses
+  attr_reader :quiz
 
-  def initialize()
+  def initialize(quiz = nil)
+    @quiz = quiz
     @questions = []
   end
 
-  def load_from(quiz)
+  def load
     @title = quiz.title
     @description = quiz.description
 
@@ -16,7 +18,7 @@ class QuizJson
       end
     end
 
-    @correct_responses = load_correct_responses(quiz)
+    # @correct_responses = load_correct_responses(quiz)
     self
   end
 
@@ -36,12 +38,11 @@ class QuizJson
     title.nil?
   end
 
-  def load_correct_responses(quiz)
-    result = []
+  def correct_responses
+    result = {}
     quiz.questions.each do |q|
-      q.options.each do |opt|
-        result << { opt.id => opt.is_correct }
-      end
+      correct_option = q.options.find{ |opt| opt.is_correct }
+      result[q.id] = correct_option[:id]
     end
     result
   end
@@ -51,7 +52,7 @@ class QuizJson
                title: @title,
                description: @description,
                questions: @questions,
-               correct_responses: correct_responses
+               correct_responses: correct_responses # { 12: 1, 13: 2, question_id: option_id }
              }
     output
   end
