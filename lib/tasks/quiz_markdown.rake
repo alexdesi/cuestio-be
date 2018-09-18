@@ -8,12 +8,19 @@ namespace :quiz_markdown do
 
     quiz_json = QuizMarkdown::Parser.new(args[:qmd_file]).quiz_json
 
+    puts "Correct responses: #{quiz_json.correct_responses}"
+
     quiz = Quiz.create(title: quiz_json.title, description: quiz_json.description)
-    quiz_json.questions.each do |q|
-      question = Question.create(quiz_id: quiz.id, body: q[:body])
+    quiz_json.questions.each_with_index do |q, index|
       pp q
-      q[:options].each do |opt|
-        Option.create(question_id: question.id, body: opt[:body], is_correct: opt[:is_correct])
+      correct_option =  quiz_json.correct_responses[index + 1]
+
+      question = Question.create(quiz_id: quiz.id, body: q[:body])
+
+      q[:options].each_with_index do |opt, opt_id|
+        Option.create( question_id: question.id,
+                       body: opt[:body],
+                       is_correct: correct_option == opt_id + 1 )
       end
     end
 

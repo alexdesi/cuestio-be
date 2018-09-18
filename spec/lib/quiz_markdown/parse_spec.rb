@@ -12,21 +12,21 @@ RSpec.describe QuizMarkdown::Quiz do
             :id=>nil,
             :body=>"First question",
             :options=>
-             [{:body=>"Option1", :id=>nil},
-              {:body=>"Option2", :id=>nil},
-              {:body=>"Option3", :id=>nil}]},
+             [{:body=>"Option11", :id=>nil},
+              {:body=>"Option12", :id=>nil},
+              {:body=>"Option13", :id=>nil}]},
             {:id=>nil,
             :body=>"Second question",
             :options=>
-             [{:body=>"Option1", :id=>nil},
-              {:body=>"Option2", :id=>nil},
-              {:body=>"Option3", :id=>nil}]},
+             [{:body=>"Option21", :id=>nil},
+              {:body=>"Option22", :id=>nil},
+              {:body=>"Option23", :id=>nil}]},
             {:id=>nil,
              :body=>"Third question",
              :options=>
-              [{:body=>"Option1", :id=>nil},
-               {:body=>"Option2", :id=>nil},
-               {:body=>"Option3", :id=>nil}]}],
+              [{:body=>"Option31", :id=>nil},
+               {:body=>"Option32", :id=>nil},
+               {:body=>"Option33", :id=>nil}]}],
        :correct_responses=>{ 1=>1, 2=>3, 3=>1 }
       })
     end

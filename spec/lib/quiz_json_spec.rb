@@ -5,15 +5,13 @@ RSpec.describe QuizJson do
     subject { described_class.new(quiz) }
     let(:quiz) { FactoryBot.create(:quiz, :with_question_and_option) }
 
-    describe '#load_from' do
+    describe '#load' do
       it 'returns the correct quiz' do
-        options = quiz.questions.first.options
+        first_question = quiz.questions[0]
+        options = first_question.options
         options.second.update_attributes(is_correct: true)
 
         subject.load
-
-        
-        first_question = quiz.questions[0]
 
         expect(subject.to_hash).to eq({
           :title=>"Quiz",

@@ -1,5 +1,5 @@
 class QuizJson
-  attr_accessor :title, :description, :questions #, :correct_responses
+  attr_accessor :title, :description, :questions, :correct_responses
   attr_reader :quiz
 
   def initialize(quiz = nil)
@@ -10,6 +10,7 @@ class QuizJson
   def load
     @title = quiz.title
     @description = quiz.description
+    @correct_responses = load_correct_responses
 
     quiz.questions.each do |q|
       add_question(body: q.body, id: q.id)
@@ -20,6 +21,15 @@ class QuizJson
 
     # @correct_responses = load_correct_responses(quiz)
     self
+  end
+
+  def load_correct_responses
+    result = {}
+    quiz.questions.each do |q|
+      correct_option = q.options.find{ |opt| opt.is_correct }
+      result[q.id] = correct_option[:id]
+    end
+    result
   end
 
   def add_question(body:, id: nil)
@@ -36,15 +46,6 @@ class QuizJson
 
   def empty?
     title.nil?
-  end
-
-  def correct_responses
-    result = {}
-    quiz.questions.each do |q|
-      correct_option = q.options.find{ |opt| opt.is_correct }
-      result[q.id] = correct_option[:id]
-    end
-    result
   end
 
   def to_hash
