@@ -7,8 +7,7 @@ import ReactDOM from 'react-dom'
 import { App } from './components/App.jsx'
 
 document.addEventListener('DOMContentLoaded', () => {
-  const node = document.getElementById('quiz_data')
-  const data = JSON.parse(node.getAttribute('data'))
+  console.log('>>> ReactDOM.render')
 
-  ReactDOM.render(<App quiz = { data } />, document.getElementById('root'))
+  ReactDOM.render(<App/>, document.getElementById('root'))
 })

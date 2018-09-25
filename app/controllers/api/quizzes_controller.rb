@@ -6,4 +6,10 @@ class Api::QuizzesController < ApplicationController
 
     render json: quiz_json
   end
+
+  def index
+  	quizzes = Quiz.all
+
+  	render json: quizzes
+  end
 end

@@ -2,6 +2,18 @@ import React, { Component } from 'react'
 import { Question } from './Question'
 
 class Quiz extends Component {
+
+  componentDidMount(){
+    console.log('componentDidMount!!!!')
+    fetch('http://localhost:3000/api/quizzes/2')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(JSON.stringify(myJson));
+      });
+  }
+
   constructor(props){
     super(props)
     console.log('[Quiz] props')
