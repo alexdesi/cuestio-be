@@ -4,8 +4,6 @@ import { Options } from './Options'
 class Question extends Component {
   constructor(props){
     super(props)
-    console.log('Question constructor')
-    console.log(props)
     this.state = { response: null }
   }
 

@@ -7,7 +7,5 @@ import ReactDOM from 'react-dom'
 import { App } from './components/App.jsx'
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('>>> ReactDOM.render')
-
   ReactDOM.render(<App/>, document.getElementById('root'))
 })

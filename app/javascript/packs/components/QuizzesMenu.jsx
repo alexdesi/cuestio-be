@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 
 class QuizzesMenu extends Component {
   constructor() {
@@ -17,19 +18,17 @@ class QuizzesMenu extends Component {
       })
       .then((data) => {
         this.setState({ quizzes: data })
-        console.log('>>> data:')
-        console.log(JSON.stringify(data));
       });
   }
 
   render() {
-    console.log('>>> QuizzesMenu render')
-    console.log(this.state.quizzes)
-
     return(
-      this.state.quizzes.map(e =>
-        <p>{e.title} {e.description}</p>
-      )
+      <ul>
+        { this.state.quizzes.map(e =>
+          <li key={ 'quizzes-'+ e.id }>
+            <Link to={ '/quizzes/' + e.id }> {e.title} </Link>
+          </li> )}
+      </ul>
     )
   }
 }

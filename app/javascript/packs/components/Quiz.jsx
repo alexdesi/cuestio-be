@@ -1,36 +1,40 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
+
 import { Question } from './Question'
 
 class Quiz extends Component {
 
   componentDidMount(){
     console.log('componentDidMount!!!!')
+
     fetch('http://localhost:3000/api/quizzes/2')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(myJson) {
-        console.log(JSON.stringify(myJson));
+      .then( response => response.json() )
+      .then( quiz => {
+        this.questions = quiz.questions
+        this.correctResponses = quiz.correct_responses
+        this.setState( {
+                        currentQuestionId: this.questionIds()[0],
+                        completed: false
+                      })
       });
   }
 
   constructor(props){
     super(props)
-    console.log('[Quiz] props')
-    console.log(props)
 
-    let firstQuestionId = this.questionIds()[0]
+    this.questions = []
+    this.responses = []
+    this.correctResponses = []
 
     this.state = {
-      currentQuestionId: firstQuestionId,
-      completed: false
+      currentQuestionId: null,
+      completed: null
     }
-
-    this.responses = []
   }
 
   questionIds() {
-    return this.props.quiz.questions.map(q => q.id)
+    return this.questions.map(q => q.id)
   }
 
   currentIndex(){
@@ -38,7 +42,7 @@ class Quiz extends Component {
   }
 
   isLastQuestion(){
-    return (this.currentIndex() + 1 === this.props.quiz.questions.length)
+    return (this.currentIndex() + 1 === this.questions.length)
   }
 
   handleNextQuestion(currentResponse){
@@ -56,26 +60,30 @@ class Quiz extends Component {
   }
 
   questionById(id){
-    return this.props.quiz.questions.find( (e) => e.id == id)
+    return this.questions.find( (e) => e.id == id)
   }
 
   score(){
-    let correctResponses = this.responses.filter( (r) => r.response == this.props.quiz.correct_responses[r.id] )
+    let correctResponses = this.responses.filter( (r) => r.response == this.correctResponses[r.id] )
 
-    let score = correctResponses.length / this.responses.length
-    return(score)
+    return (correctResponses.length / this.responses.length)
+
   }
 
   render(){
     return(
       <div>
-        { !this.state.completed ?
+        { this.questions.length === 0 ?
+          <p>Loading questions ...</p>
+        : !this.state.completed ?
           <Question question={this.questionById(this.state.currentQuestionId)}
-                    questionsNumber={this.props.quiz.questions.length}
-                    handleNextQuestion={this.handleNextQuestion.bind(this)} /> :
+                    questionsNumber={this.questions.length}
+                    handleNextQuestion={this.handleNextQuestion.bind(this)} />
+        :
           <div>
             <p>Test completed! Well done :)</p>
-            <p>Your score is: {this.score()}</p>
+            <p>Your score is: { this.score() }</p>
+            <Link to={ '/quizzes/' }>Other quizzes</Link>
           </div>
         }
       </div>
