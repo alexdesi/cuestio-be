@@ -74,10 +74,11 @@ class Quiz extends Component {
     return(
       <div>
         { this.questions.length === 0 ?
-          <p>Loading questions ...</p>
+          <p>Loading questions . . .</p>
         : !this.state.completed ?
           <Question question={this.questionById(this.state.currentQuestionId)}
-                    questionsNumber={this.questions.length}
+                    currentIndex={this.currentIndex() + 1}
+                    lastIndex={this.questions.length}
                     handleNextQuestion={this.handleNextQuestion.bind(this)} />
         :
           <div>

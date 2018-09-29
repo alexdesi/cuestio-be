@@ -4,20 +4,20 @@
 <%= link_to 'Import a quiz', '' %>
 
 <h2>What is Cuestio</h2>
-<p>Cuestio is a learning tool.</p>
-<p>The best way to reinforce your knowledge of a certain topic is by testing yourself in that topic. Quizzes are one efficient way to test your knowledge.</p>
+<p>Cuestio is a learning tool that allow you to create interactive quizzes from simple markdown files.</p>
 
-<p>With Cuestio you can write your quizzes in markdown text and then import them to make them interactive.</p>
+<h3>Why you should using Cuestio</h3>
+<p>The best way to reinforce your knowledge on a certain topic is by testing yourself in that topic. Quizzes are a very efficient way to test your knowledge and prevent forgetting.</p>
 
 <p>Cuestio allows you to write a Quiz using a simple Markdown text.</p>
 
-<h2>How does it works</h2>
+<h3>Do you want to test your knowledge</h3>
+<p>Test your knowledge with one existing quizzes.<p>
 
+<h3>Do you want to create a quiz?</h3>
 <ul>
-  <li>Write a Markdown quiz document.</li>
-  <li>Import it into Cuestio</li>
-  <li>Test your knowledge.</li>
-  <li>Share it with the learners comunity.</li>
+  <li><%= link_to('Write a Markdown quiz document.', '/create') %></li>
+  <li><%= link_to('Publish it on the web', '/publish') %></li>
+  <li><%= link_to('Let Cuestio know where did you publish it') %></li>
+  <li><%= link_to('Share it!', '/share') %></li>
 </ul>
-
-<div id="root"></div>

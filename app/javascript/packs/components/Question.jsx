@@ -20,10 +20,14 @@ class Question extends Component {
     }
   }
 
+  skip(){
+    this.props.handleNextQuestion({id: this.props.question.id, response: null})
+    this.setState({response: null })
+  }
+
   render(){
     return(
       <div>
-        <p>Question {this.props.question.id} of {this.props.questionsNumber}</p>
         <h3>{ this.props.question.body }</h3>
         <Options
           options={ this.props.question.options }
@@ -31,6 +35,9 @@ class Question extends Component {
           optionSelected={ this.optionSelected.bind(this) }>
         </Options>
 
+        <p>Question {this.props.currentIndex} of {this.props.lastIndex}</p>
+
+        <button onClick={ this.skip.bind(this) }>Skip</button>
         <button onClick={ this.handleConfirm.bind(this) }>Confirm</button>
       </div>
     )
