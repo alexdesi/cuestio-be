@@ -27,6 +27,7 @@ class QuizzesMenu extends Component {
         { this.state.quizzes.map(e =>
           <li key={ 'quizzes-'+ e.id }>
             <Link to={ '/quizzes/' + e.id }> {e.title} </Link>
+            <p>{e.description}</p>
           </li> )}
       </ul>
     )

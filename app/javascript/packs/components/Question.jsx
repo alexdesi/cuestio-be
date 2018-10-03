@@ -35,7 +35,7 @@ class Question extends Component {
           optionSelected={ this.optionSelected.bind(this) }>
         </Options>
 
-        <p>Question {this.props.currentIndex} of {this.props.lastIndex}</p>
+        <p><small>Question {this.props.currentIndex} of {this.props.lastIndex}</small></p>
 
         <button onClick={ this.skip.bind(this) }>Skip</button>
         <button onClick={ this.handleConfirm.bind(this) }>Confirm</button>
