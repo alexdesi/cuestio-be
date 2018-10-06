@@ -8,8 +8,8 @@ class Api::QuizzesController < ApplicationController
   end
 
   def index
-  	quizzes = Quiz.all
+    quizzes = Quiz.all
 
-  	render json: quizzes
+    render json: quizzes
   end
 end

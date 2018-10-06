@@ -8,7 +8,9 @@ class Quiz extends Component {
   componentDidMount(){
     console.log('componentDidMount!!!!')
 
-    fetch('http://localhost:3000/api/quizzes/2')
+    let quiz_id = this.props.match.params.id
+
+    fetch('http://localhost:3000/api/quizzes/' + quiz_id)
       .then( response => response.json() )
       .then( quiz => {
         this.questions = quiz.questions

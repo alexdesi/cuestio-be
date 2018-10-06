@@ -11,7 +11,7 @@ const Options = (props) => {
                checked={opt.id == props.selected}
                key={opt.id}
         />
-        <label for={`option-${opt.id}`}>{opt.body}</label>
+        <label htmlFor={`option-${opt.id}`}>{opt.body}</label>
       </div>
     )
   )
