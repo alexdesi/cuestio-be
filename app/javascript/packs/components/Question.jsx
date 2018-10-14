@@ -28,17 +28,26 @@ class Question extends Component {
   render(){
     return(
       <div>
-        <h3>{ this.props.question.body }</h3>
+        <p className='lead'>{ this.props.question.body }</p>
         <Options
           options={ this.props.question.options }
           selected = { this.state.response }
           optionSelected={ this.optionSelected.bind(this) }>
         </Options>
 
-        <p><small>Question {this.props.currentIndex} of {this.props.lastIndex}</small></p>
+        <p><small>{this.props.currentIndex} / {this.props.lastIndex}</small></p>
 
-        <button onClick={ this.skip.bind(this) }>Skip</button>
-        <button onClick={ this.handleConfirm.bind(this) }>Confirm</button>
+        
+        <div className='btn-toolbar' role='toolbar'>
+          <div className='btn-group btn-group-sm mr-2'>
+            <button onClick={this.skip.bind(this)}
+                    className='btn btn-secondary'>Skip</button>
+          </div>
+          <div className='btn-group btn-group-lg'>
+            <button onClick={this.handleConfirm.bind(this)}
+                    className='btn btn-primary'>Confirm</button>
+          </div>
+        </div>
       </div>
     )
   }

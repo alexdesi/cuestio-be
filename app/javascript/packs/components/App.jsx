@@ -11,10 +11,6 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <header className="App-header">
-            <h1 className="App-title">Quiz</h1>
-          </header>
-
           <Switch>
             <Route exact path="/quizzes" component={ QuizzesMenu }/>
             <Route exact path="/quizzes/import" component={ QuizImport }/>

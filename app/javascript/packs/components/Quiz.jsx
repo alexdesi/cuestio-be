@@ -13,6 +13,9 @@ class Quiz extends Component {
     fetch('http://localhost:3000/api/quizzes/' + quiz_id)
       .then( response => response.json() )
       .then( quiz => {
+        console.log(quiz.title)
+        this.title = quiz.title
+        this.description = quiz.description
         this.questions = quiz.questions
         this.correctResponses = quiz.correct_responses
         this.setState( {
@@ -25,6 +28,8 @@ class Quiz extends Component {
   constructor(props){
     super(props)
 
+    this.title = null
+    this.description = null
     this.questions = []
     this.responses = []
     this.correctResponses = []
@@ -74,21 +79,33 @@ class Quiz extends Component {
 
   render(){
     return(
-      <div>
-        { this.questions.length === 0 ?
-          <p>Loading questions . . .</p>
-        : !this.state.completed ?
-          <Question question={this.questionById(this.state.currentQuestionId)}
-                    currentIndex={this.currentIndex() + 1}
-                    lastIndex={this.questions.length}
-                    handleNextQuestion={this.handleNextQuestion.bind(this)} />
-        :
-          <div>
-            <p>Test completed! Well done :)</p>
-            <p>Your score is: { this.score() }</p>
-            <Link to={ '/quizzes/' }>Other quizzes</Link>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <p>{this.description}</p>
           </div>
-        }
+
+          <div class="col-sm">
+              <h2>{this.title}</h2>
+              { this.questions.length === 0 ?
+                <p>Loading questions . . .</p>
+              : !this.state.completed ?
+                <Question question={this.questionById(this.state.currentQuestionId)}
+                          currentIndex={this.currentIndex() + 1}
+                          lastIndex={this.questions.length}
+                          handleNextQuestion={this.handleNextQuestion.bind(this)} />
+              :
+                <div>
+                  <p>Test completed! Well done :)</p>
+                  <p>Your score is: { this.score() }</p>
+                  <Link to={ '/quizzes/' }>Other quizzes</Link>
+                </div>
+              }
+          </div>
+
+          <div class="col-sm">
+          </div>
+        </div>
       </div>
     )
   }
