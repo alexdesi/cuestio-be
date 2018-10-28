@@ -1,7 +1,5 @@
 module QuizMarkdown
-  def self.import_quiz(filename)
-    quiz_json = QuizMarkdown::Parser.new(filename).quiz_json
-
+  def self.import_quiz(quiz_json)
     puts "Correct responses: #{quiz_json.correct_responses}"
 
     quiz = Quiz.create(title: quiz_json.title, description: quiz_json.description)

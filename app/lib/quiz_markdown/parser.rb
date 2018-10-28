@@ -2,11 +2,13 @@ require './app/lib/quiz_json'
 
 module QuizMarkdown
   class Parser
-    def initialize(filename)
-      raise('Ops! Filename is empty!') if filename.empty?
+    def initialize(filename: nil, text: nil)
+      raise('Provide filename, or text are empty') unless filename.present? || text.present?
 
-      @text = File.open(filename).read
+      @text = text
+      @text = File.open(filename).read if filename.present?
       @quiz_json = QuizJson.new
+      @errors = {}
     end
 
     def quiz_json
@@ -27,6 +29,13 @@ module QuizMarkdown
       @quiz_json
     end
 
+    def errors
+      @errors[:title] = 'Title is not present.' unless title.present?
+      @errors[:description] = 'Description is not present.' unless description_paragraph.present?
+
+      @errors
+    end
+
     private
 
     def is_loaded?
@@ -34,15 +43,13 @@ module QuizMarkdown
     end
 
     def description_paragraph
-      (/##description(.+?)##/mi)
-        .match(@text)[1]
-        .strip
+      match = (/##description(.+?)##/mi).match(@text)
+      match && match[1].strip
     end
 
     def title
-      /^#([\w\s]+)$/
-        .match(@text)[1]
-        .strip
+      match = /^#([\w\s]+)$/.match(@text)
+      match && match[1].strip
     end
 
     def questions_paragraph

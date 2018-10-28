@@ -16,8 +16,6 @@ class App extends Component {
             <Route exact path="/quizzes/import" component={ QuizImport }/>
             <Route path="/quizzes/:id" component={ Quiz }/>
           </Switch>
-
-
         </div>
       </BrowserRouter>
     )

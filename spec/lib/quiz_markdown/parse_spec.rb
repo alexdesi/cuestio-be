@@ -31,4 +31,15 @@ RSpec.describe QuizMarkdown::Quiz do
       })
     end
   end
+
+  describe '#errors' do
+    context 'when title is missing' do
+      let(:quiz_markdown) { QuizMarkdown::Parser.new('./spec/examples/quiz_test_with_errors.md') }
+
+      it 'returns title, description error' do
+        expect(quiz_markdown.errors[:title]).to eq 'Title is not present.'
+        expect(quiz_markdown.errors[:description]).to eq 'Description is not present.'
+      end
+    end
+  end
 end

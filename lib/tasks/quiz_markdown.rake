@@ -6,6 +6,8 @@ namespace :quiz_markdown do
   task :import, [:qmd_file] => :environment do |_task, args| #qmd = QuizMarkdown
     puts args
 
-    QuizMarkdown::import_quiz(args[:qmd_file])
+    quiz_json = QuizMarkdown::Parser.new(args[:qmd_file]).quiz_json
+
+    QuizMarkdown::import_quiz(quiz_json)
   end
 end
