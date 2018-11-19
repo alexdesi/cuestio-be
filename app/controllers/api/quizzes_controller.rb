@@ -11,23 +11,28 @@ class Api::QuizzesController < ApplicationController
 
     render json: quizzes
   end
-
+ 
   def import
-  	url = params[:url]
+    url = params[:url]
     
-    quiz_text = get_quiz_page(url)
+    # quiz_text = get_quiz_page(url)
 
-    # quiz_text = mock_quiz
+    quiz_text = mock_quiz
 
     parser = QuizMarkdown::Parser.new(text: quiz_text)
 
     # if parser.errors.empty?
       # QuizMarkdown::import_quiz(quiz_json)
 
-    puts parser.inspect
+    if parser.empty_errors?
+      # QuizMarkdown.import_quiz(quiz_json)
+    end
+
+    puts parser.quiz_json
+    puts parser.errors
 
     render json: {
-                   quiz: parser.quiz_json,
+                   quiz: parser.quiz_json, #TODO in case of errors this should be empty
                    errors: parser.errors
                  }
   end
@@ -43,6 +48,10 @@ class Api::QuizzesController < ApplicationController
 
   def mock_quiz
 <<TEXT
+#title
+
+##Description This is the description
+
 ##Questions
 
 1. First question

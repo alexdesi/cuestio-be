@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe QuizMarkdown::Quiz do
-  let(:quiz_markdown) { QuizMarkdown::Parser.new('./spec/examples/quiz_test.md') }
+  let(:quiz_markdown) { QuizMarkdown::Parser.new(filename: './spec/examples/quiz_test.md') }
 
   describe '#quiz_json' do
     it 'returns the quiz json' do
@@ -32,13 +32,24 @@ RSpec.describe QuizMarkdown::Quiz do
     end
   end
 
-  describe '#errors' do
-    context 'when title is missing' do
-      let(:quiz_markdown) { QuizMarkdown::Parser.new('./spec/examples/quiz_test_with_errors.md') }
+  context 'when title is missing' do
+    let(:quiz_markdown) { QuizMarkdown::Parser.new(filename: './spec/examples/quiz_test_with_errors.md') }
 
+    describe '#errors' do
       it 'returns title, description error' do
         expect(quiz_markdown.errors[:title]).to eq 'Title is not present.'
         expect(quiz_markdown.errors[:description]).to eq 'Description is not present.'
+      end
+    end
+
+    describe '#quiz_json' do
+      it 'returns {}' do
+        expect(quiz_markdown.quiz_json.to_hash).to eq(
+          title: nil,
+          description: nil,
+          questions: [],
+          correct_responses: nil
+          )
       end
     end
   end

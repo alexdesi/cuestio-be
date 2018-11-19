@@ -5,8 +5,9 @@ class QuizImport extends Component {
     super(props)
     this.state = {
                   url: '', 
-                  result: '',
-                  errors: null                }
+                  result: null,
+                  errors: null
+                }
   }
 
   handleSubmit(event){
@@ -32,7 +33,7 @@ class QuizImport extends Component {
 
         console.log(r.quiz)
 
-        // this.setState({result: r.result})
+        this.setState({result: r.quiz})
       })
       .catch(error => {
         console.log(error)
@@ -46,7 +47,7 @@ class QuizImport extends Component {
 
   renderError(){
     return(
-      this.state.errors ?
+      this.state.errors && this.state.errors.length > 0 ?
         <div className="alert alert-danger" role="alert">
           <ul>
             {this.state.errors.map(error =>
@@ -56,6 +57,16 @@ class QuizImport extends Component {
           </ul>
         </div>
       : null 
+    )
+  }
+
+  renderSuccess(){
+    return(
+      this.state.errors && this.state.errors.length === 0 ?
+      <div class="alert alert-success" role="alert">
+        The Markdown quiz was successfully imported! 
+      </div>
+      : null
     )
   }
 
@@ -78,8 +89,9 @@ class QuizImport extends Component {
 
           <button type="submit" value='Import' className="btn btn-primary">Submit</button>
         </form>
-        {this.renderError()}
-        <p>Result: {this.state.result}</p>
+
+        { this.renderError() }
+        { this.renderSuccess() }
       </div>
     )
   }

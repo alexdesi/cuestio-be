@@ -3,7 +3,7 @@ require './app/lib/quiz_json'
 module QuizMarkdown
   class Parser
     def initialize(filename: nil, text: nil)
-      raise('Provide filename, or text are empty') unless filename.present? || text.present?
+      raise('filename and text are both empty') unless filename.present? || text.present?
 
       @text = text
       @text = File.open(filename).read if filename.present?
@@ -12,7 +12,7 @@ module QuizMarkdown
     end
 
     def quiz_json
-      return @quiz_json.to_hash unless @quiz_json.empty?
+      return @quiz_json if errors.any?
 
       @quiz_json.title = title
       @quiz_json.description = description_paragraph
@@ -34,6 +34,10 @@ module QuizMarkdown
       @errors[:description] = 'Description is not present.' unless description_paragraph.present?
 
       @errors
+    end
+
+    def empty_errors?
+      @errors.empty?
     end
 
     private
